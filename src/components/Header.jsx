@@ -1,8 +1,22 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const Header = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const auth = getAuth();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
+  }, [auth]);
 
   function pathMatchRoute(route) {
     return route === location.pathname;
@@ -33,7 +47,9 @@ export const Header = (props) => {
             </li>
             <li
               className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] ${
-                pathMatchRoute("/offers") ? "text-black border-b-red-500" : "border-b-transparent"
+                pathMatchRoute("/offers")
+                  ? "text-black border-b-red-500"
+                  : "border-b-transparent"
               }`}
               onClick={() => navigate("/offers")}
             >
@@ -41,11 +57,13 @@ export const Header = (props) => {
             </li>
             <li
               className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] ${
-                pathMatchRoute("/sign-in") ? "text-black border-b-red-500" : "border-b-transparent"
+                pathMatchRoute("/sign-in") || pathMatchRoute("/profile")
+                  ? "text-black border-b-red-500"
+                  : "border-b-transparent"
               }`}
-              onClick={() => navigate("/sign-in")}
+              onClick={() => navigate(!loggedIn ? "/sign-in" : "/profile")}
             >
-              Sing in
+              {!loggedIn ? "Sign in" : "Profile"}
             </li>
           </ul>
         </div>
