@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 import { OAth } from "../components";
+import { db } from "../firebase";
 
 export function SignUp(props) {
-  const [formData, setFormData] = useState({ email: "", password: "", name: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const { email, password, name } = formData;
 
   const onChange = (event) => {
@@ -13,6 +26,33 @@ export function SignUp(props) {
       ...prevState,
       [event.target.id]: event.target.value,
     }));
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+
+      await updateProfile(auth.currentUser, { displayName: name });
+
+      const user = userCredential.user;
+      const { password: userPassword, ...formDataCopy } = formData;
+      formDataCopy.timestamp = serverTimestamp();
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      setFormData({ email: "", password: "", name: "" });
+      navigate("/");
+      toast.success(`${user.displayName} successfully registered`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong with registration");
+    }
   };
 
   return (
@@ -27,14 +67,14 @@ export function SignUp(props) {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form action="#">
+          <form action="#" onSubmit={onSubmit}>
             <input
-                type="name"
-                id="name"
-                value={name}
-                onChange={onChange}
-                placeholder="Full name"
-                className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out mb-6"
+              type="name"
+              id="name"
+              value={name}
+              onChange={onChange}
+              placeholder="Full name"
+              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out mb-6"
             />
             <input
               type="email"

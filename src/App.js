@@ -1,13 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import {
-  Home,
-  SignIn,
-  SignUp,
-  Profile,
-  Offers,
-  ForgotPassword,
-} from "./pages";
+import { ToastContainer } from "react-toastify";
+import { Home, SignIn, SignUp, Profile, Offers, ForgotPassword } from "./pages";
 import { Header } from "./components";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -23,6 +19,18 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </Router>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 }

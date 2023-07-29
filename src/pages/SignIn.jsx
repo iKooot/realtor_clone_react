@@ -15,6 +15,10 @@ export function SignIn(props) {
     }));
   };
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <section>
       <h1 className="text-3xl text-center mt-6 font-bold">Sing in</h1>
@@ -27,7 +31,7 @@ export function SignIn(props) {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form action="#">
+          <form action="#" onSubmit={onSubmit}>
             <input
               type="email"
               id="email"
