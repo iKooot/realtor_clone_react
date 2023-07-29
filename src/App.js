@@ -1,10 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Home, SignIn, SignUp, Profile, Offers, ForgotPassword } from "./pages";
-import { Header } from "./components";
+import { Header, PrivateRoute } from "./components";
 
 import "react-toastify/dist/ReactToastify.css";
-import { PrivateRoute } from "./components/PrivateRoute";
 
 function App() {
   return (
