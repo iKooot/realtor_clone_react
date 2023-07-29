@@ -22,26 +22,28 @@ export const Header = (props) => {
         <div>
           <ul className="flex space-x-10">
             <li
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatchRoute("/") && "text-black border-b-red-500"
+              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px]  ${
+                pathMatchRoute("/")
+                  ? "text-black border-b-red-500"
+                  : "border-b-transparent"
               }`}
               onClick={() => navigate("/")}
             >
               Home
             </li>
             <li
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatchRoute("/offers") && "text-black border-b-red-500"
+              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] ${
+                pathMatchRoute("/offers") ? "text-black border-b-red-500" : "border-b-transparent"
               }`}
               onClick={() => navigate("/offers")}
             >
               Offers
             </li>
             <li
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatchRoute("/sing-in") && "text-black border-b-red-500"
+              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] ${
+                pathMatchRoute("/sign-in") ? "text-black border-b-red-500" : "border-b-transparent"
               }`}
-              onClick={() => navigate("/sing-in")}
+              onClick={() => navigate("/sign-in")}
             >
               Sing in
             </li>
