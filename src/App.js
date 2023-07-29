@@ -7,11 +7,13 @@ import {
   Offers,
   ForgotPassword,
 } from "./pages";
+import { Header } from "./components";
 
 function App() {
   return (
     <>
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />
