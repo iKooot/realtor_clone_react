@@ -10,7 +10,7 @@ export const Header = (props) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user && user.emailVerified) {
         setLoggedIn(true);
       } else {
         setLoggedIn(false);

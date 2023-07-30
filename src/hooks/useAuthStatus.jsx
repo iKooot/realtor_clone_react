@@ -8,7 +8,7 @@ export const useAuthStatus = (props) => {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user && user.emailVerified) {
         setLoggedIn(true);
       }
       setCheckingStatus(false);

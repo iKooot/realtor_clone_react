@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -39,6 +40,9 @@ export function SignUp(props) {
         password,
       );
 
+      await sendEmailVerification(auth.currentUser, {
+        url: "http://localhost:3000/profile",
+      });
       await updateProfile(auth.currentUser, { displayName: name });
 
       const user = userCredential.user;
